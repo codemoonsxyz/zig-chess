@@ -1,0 +1,8 @@
+**/zig-cache
+**/zig-out
+**/artifacts
+.DS_Store
+**/*.bin
+**/*.pgn
+**/*.bson
+*.epd
