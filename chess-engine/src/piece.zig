@@ -1,4 +1,15 @@
-const piece_type = enum { Rook, Knight, Pawn, Queen, Bishop, King };
+const piece_type = enum {
+    Rook,
+    Knight,
+    Pawn,
+    Queen,
+    Bishop,
+    King,
+    //
+    pub inline fn index(self: piece_type) u8 {
+        return @intFromEnum(self);
+    }
+};
 const color = enum { White, Black };
 
 pub const piece = enum(u8) {
