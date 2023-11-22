@@ -19,10 +19,12 @@ pub const not_hg_file: u64 = 4557430888798830399;
 // not AB file constant
 pub const not_ab_file: u64 = 18229723555195321596;
 
-pub fn pawn_mask(square: Square, side: Color) Bitboard {
+pub fn pawn_mask(side: Color, square: Square) Bitboard {
     var bitboard = Bitboard.default();
 
     bitboard.set_bit(square);
+
+    bitboard.print_board();
 
     var attack_board = Bitboard.default();
 
@@ -32,26 +34,21 @@ pub fn pawn_mask(square: Square, side: Color) Bitboard {
             // Makes sure move does not go off board
 
             // off left
-            if (((bitboard.bb >> 7) & not_a_file) != 0) {
-                attack_board.bb |= (bitboard.bb >> 7);
-            }
+
+            attack_board.bb |= ((bitboard.bb >> 7) & not_a_file);
 
             //off right
-            if (((bitboard.bb >> 9) & not_h_file) != 0) {
-                attack_board.bb |= (bitboard.bb >> 9);
-            }
+
+            attack_board.bb |= ((bitboard.bb >> 9) & not_h_file);
 
             return attack_board;
         },
         .Black => {
-            if (((bitboard.bb << 7) & not_a_file) != 0) {
-                attack_board.bb |= (bitboard.bb << 7);
-            }
+            attack_board.bb |= ((bitboard.bb << 7) & not_h_file);
 
             //off right
-            if (((bitboard.bb << 9) & not_h_file) != 0) {
-                attack_board.bb |= (bitboard.bb << 9);
-            }
+            attack_board.bb |= ((bitboard.bb << 9) & not_a_file);
+
             return attack_board;
         },
     }
@@ -60,7 +57,7 @@ pub fn pawn_mask(square: Square, side: Color) Bitboard {
 test "Pawn Masks" {
 
     // White
-    const white_mask = pawn_mask(Square.C4, Color.White);
+    const white_mask = pawn_mask(Color.White, Square.C4);
 
     try expect(white_mask.get_bit(Square.D5));
 
@@ -68,7 +65,7 @@ test "Pawn Masks" {
 
     // Black
 
-    const black_mask = pawn_mask(Square.D5, Color.Black);
+    const black_mask = pawn_mask(Color.Black, Square.D5);
 
     try expect(black_mask.get_bit(Square.E4));
 

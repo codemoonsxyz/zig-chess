@@ -8,11 +8,13 @@ const Types = @import("types.zig");
 
 const tables = @import("tables.zig");
 
-pub fn main() !void {
-    tables.init();
-    //const bb = Bitboard{ .bb = tables.PawnAttacks[@intFromEnum(Types.Color.White)][@intFromEnum(Types.square.D5)] };
-    var bb = Bitboard.default();
+const Attacks = @import("attacks.zig");
 
-    bb.set_bit(Square.A5);
-    bb.print_board();
+pub fn main() !void {
+    //tables.init();
+    //const bb = Bitboard{ .bb = tables.PawnAttacks[@intFromEnum(Types.Color.White)][@intFromEnum(Types.square.D5)] };
+
+    Attacks.pawn_mask(Types.Color.Black, Square.A1).print_board();
+
+    //   tables.PawnAttacks[1][0].print_board();
 }
