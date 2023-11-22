@@ -13,7 +13,7 @@ pub const Bitboard = packed struct {
 
     pub fn set_bit(self: *Bitboard, square: Square) void {
         //
-        self.bb = (self.bb | (@as(u64, 1) << @intFromEnum(square)));
+        self.bb |= (@as(u64, 1) << @intFromEnum(square));
     }
 
     pub fn default() Bitboard {

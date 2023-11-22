@@ -24,9 +24,7 @@ pub fn pawn_mask(side: Color, square: Square) Bitboard {
 
     bitboard.set_bit(square);
 
-    bitboard.print_board();
-
-    var attack_board = Bitboard.default();
+    var attack_board: u64 = 0;
 
     switch (side) {
         .White => {
@@ -35,25 +33,66 @@ pub fn pawn_mask(side: Color, square: Square) Bitboard {
 
             // off left
 
-            attack_board.bb |= ((bitboard.bb >> 7) & not_a_file);
+            attack_board |= ((bitboard.bb >> 7) & not_a_file);
 
             //off right
 
-            attack_board.bb |= ((bitboard.bb >> 9) & not_h_file);
+            attack_board |= ((bitboard.bb >> 9) & not_h_file);
 
-            return attack_board;
+            return .{ .bb = attack_board };
         },
         .Black => {
-            attack_board.bb |= ((bitboard.bb << 7) & not_h_file);
+            attack_board |= ((bitboard.bb << 7) & not_h_file);
 
             //off right
-            attack_board.bb |= ((bitboard.bb << 9) & not_a_file);
+            attack_board |= ((bitboard.bb << 9) & not_a_file);
 
-            return attack_board;
+            return .{ .bb = attack_board };
         },
     }
 }
 
+pub fn knight_mask(square: Square) Bitboard {
+    var bitboard = Bitboard.default();
+
+    bitboard.set_bit(square);
+
+    var attack_board: u64 = 0;
+
+    // generate knight attack_board
+    attack_board |= (bitboard.bb >> 17) & not_h_file;
+    attack_board |= (bitboard.bb >> 15) & not_a_file;
+    attack_board |= (bitboard.bb >> 10) & not_hg_file;
+    attack_board |= (bitboard.bb >> 6) & not_ab_file;
+    attack_board |= (bitboard.bb << 17) & not_a_file;
+    attack_board |= (bitboard.bb << 15) & not_h_file;
+    attack_board |= (bitboard.bb << 10) & not_ab_file;
+    attack_board |= (bitboard.bb << 6) & not_hg_file;
+
+    // return attack map
+    return .{ .bb = attack_board };
+}
+
+pub fn king_mask(square: Square) Bitboard {
+    var bitboard = Bitboard.default();
+
+    bitboard.set_bit(square);
+
+    var attack_board: u64 = 0;
+    // generate king attack_board
+    attack_board |= (bitboard.bb >> 8);
+    attack_board |= (bitboard.bb >> 9) & not_h_file;
+    attack_board |= (bitboard.bb >> 7) & not_a_file;
+    attack_board |= (bitboard.bb >> 1) & not_h_file;
+    attack_board |= (bitboard.bb << 8);
+    attack_board |= (bitboard.bb << 9) & not_a_file;
+    attack_board |= (bitboard.bb << 7) & not_h_file;
+    attack_board |= (bitboard.bb << 1) & not_a_file;
+
+    // return attack map
+
+    return .{ .bb = attack_board };
+}
 test "Pawn Masks" {
 
     // White

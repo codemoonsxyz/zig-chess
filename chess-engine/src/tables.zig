@@ -14,11 +14,12 @@ pub var KingAttacks: [64]Bitboard = undefined;
 pub fn init() void {
     for (0..63) |i| {
         const sq: Square = @enumFromInt(i);
+        PawnAttacks[Color.White.index()][i] = Attacks.pawn_mask(Color.White, sq);
 
-        WhitePawnAttacks[i] = Attacks.pawn_mask(Color.White, sq);
+        PawnAttacks[Color.Black.index()][i] = Attacks.pawn_mask(Color.Black, sq);
 
-        BlackPawnAttacks[i] = Attacks.pawn_mask(Color.Black, sq);
+        KnightAttacks[i] = Attacks.knight_mask(sq);
+
+        KingAttacks[i] = Attacks.king_mask(sq);
     }
-    std.mem.copy(Bitboard, PawnAttacks[0][0..64], WhitePawnAttacks[0..64]);
-    std.mem.copy(Bitboard, PawnAttacks[1][0..64], BlackPawnAttacks[0..64]);
 }

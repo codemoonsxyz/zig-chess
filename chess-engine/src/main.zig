@@ -11,10 +11,11 @@ const tables = @import("tables.zig");
 const Attacks = @import("attacks.zig");
 
 pub fn main() !void {
-    //tables.init();
+    tables.init();
     //const bb = Bitboard{ .bb = tables.PawnAttacks[@intFromEnum(Types.Color.White)][@intFromEnum(Types.square.D5)] };
 
-    Attacks.pawn_mask(Types.Color.Black, Square.A1).print_board();
+    // Attacks.pawn_mask(Types.Color.Black, Square.A1).print_board();
 
-    //   tables.PawnAttacks[1][0].print_board();
+    const bb = tables.KingAttacks[Square.A8.index()];
+    bb.print_board();
 }
