@@ -28,16 +28,15 @@ pub const Bitboard = packed struct {
     }
 
     pub fn print_board(self: Bitboard) void {
-        const FILE_NB = @intFromEnum(File.FILE_NB);
+        var rank: u8 = 8;
 
-        const RANK_NB = @intFromEnum(Rank.RANK_NB);
-
-        for (0..RANK_NB) |rank| {
-            for (0..FILE_NB) |file| {
+        while (rank > 0) : (rank -= 1) {
+            var file: u8 = 8;
+            while (file > 0) : (file -= 1) {
                 const square: Square = @enumFromInt(rank * 8 + file);
 
                 // std.debug.print("ENUM: {s} SQUARE_VAL{d} GET_BIT{d} \n", .{ @tagName(square), (63 - (rank * 8 + file)), @intFromBool(get_bit(self, square)) });
-                if (file == 0) {
+                if (file == 8) {
                     std.debug.print("{d} | ", .{8 - rank});
                 }
 
