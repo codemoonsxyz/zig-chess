@@ -16,9 +16,7 @@ pub const Bitboard = packed struct {
         self.bb = (self.bb | (@as(u64, 1) << @intFromEnum(square)));
     }
 
-    pub fn default(self: Bitboard) Bitboard {
-        _ = self;
-
+    pub fn default() Bitboard {
         return .{
             .bb = @as(u64, 0),
         };
@@ -27,10 +25,6 @@ pub const Bitboard = packed struct {
     pub fn get_bit(self: Bitboard, square: Square) bool {
         const bb = (self.bb & (@as(u64, 1) << @intFromEnum(square)));
         if (bb == 0) return false else return true;
-    }
-
-    pub inline fn pop_bit(self: Bitboard) void {
-        return @as(i32, @intCast(@ctz(x)));
     }
 
     pub fn print_board(self: Bitboard) void {

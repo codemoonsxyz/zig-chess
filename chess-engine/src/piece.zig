@@ -1,4 +1,4 @@
-const piece_type = enum {
+const piece_type = enum(u8) {
     Rook,
     Knight,
     Pawn,
