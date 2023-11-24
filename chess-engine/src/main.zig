@@ -16,6 +16,6 @@ pub fn main() !void {
 
     // Attacks.pawn_mask(Types.Color.Black, Square.A1).print_board();
 
-    const bb = tables.KingAttacks[Square.A8.index()];
+    const bb = tables.RookAttacks[Square.A1.index()];
     bb.print_board();
 }
